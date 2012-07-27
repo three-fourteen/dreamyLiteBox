@@ -165,7 +165,6 @@
         function callback(){
             $('#fade, #close-lbox, #confirm-lbox').remove();
             lbox.removeClass();
-            data.opts.callbackOnHide();
         }
         //fade them both out
         if(data.opts.type=='alert'){
@@ -176,6 +175,7 @@
                 callback();
             });
         }
+        data.opts.callbackOnHide();
         unbindEvents();
     }
 
@@ -188,7 +188,7 @@
             var $this = $(this);
             // Append the tooltip on the DOM
             if(!$('#'+ DREAMY_LITE_BOX).length){
-                $('body').append('<div id="' + DREAMY_LITE_BOX + '" class="lbox lbox_' + opts.type + '"/>'); 
+                $('body').append('<div id="' + DREAMY_LITE_BOX + '" />'); 
             }            
             
             var data  = $this.data(DREAMY_LITE_BOX);
