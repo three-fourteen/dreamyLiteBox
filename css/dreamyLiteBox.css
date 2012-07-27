@@ -1,0 +1,95 @@
+/* 
+    Document   : jquery.dreamyLiteBox
+    Created on : Nov 16, 2011, 5:40:39 PM
+    Author     : Andres Pi
+    Description:
+        Styles for the lite box.
+*/
+
+
+#close-lbox {
+    background-position: -34px -243px;
+    display: block;
+    float: right;
+    height: 12px;
+    margin: -5px -6px 0 0;
+    position: relative;
+    width: 12px;
+    z-index: 10001;
+}
+
+.lbox {
+    background: #fff;
+    -webkit-box-shadow: 1px 1px 2px #666;
+    -moz-box-shadow: 1px 1px 2px #666;
+    box-shadow: 1px 1px 2px #666;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: none;
+    font-size: 1.2em;
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    z-index: 10000;
+}
+.lbox-content{
+    padding: 12px 15px;
+}
+.lbox_wait .lbox-content{padding: 0}
+.lbox_wait{
+    background: #fff url(../images/wait.gif) no-repeat center 20px;
+    padding: 40px 15px 12px;
+    text-align: center
+}
+.lbox_wait #close-lbox{display: none}
+
+
+#fade {
+    background: #000;
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.75;
+    filter: alpha(opacity=75) !important;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+/*confirm-lbox*/
+#confirm-lbox{
+    bottom: 0;
+    height: 25px;
+    position: absolute;
+    overflow: hidden;
+    text-align: center;
+    width: 100%
+}
+#confirm-lbox .btn{
+    display: inline-block;
+    *display: inline; /* IE7 inline-block hack */
+    *zoom: 1;
+    margin: 0 5px;
+}
+
+.lbox_alert{
+    text-align: center;
+}
+
+
+/*prompt*/
+#input-prompt-lbox{
+    display: block;
+    margin:10px auto;
+    width: 75%;
+}
+
+/*title*/
+.lbox-title{
+    font-size:16px;
+    line-height:1.5;
+    margin: 0 0 13px;
+    padding:0 15px
+}
