@@ -83,64 +83,74 @@
             data.opts.width = (data.useDefaultSizeType)?data.opts.width:250;
             data.height = (data.useDefaultSizeType)?data.opts.height:50;
         }
-        //Insert the message
-        lbox.addClass('lbox lbox_' + data.opts.type).html(data.opts.msg);
-                    
+        //Add the class
+        lbox.addClass('lbox lbox_' + data.opts.type);
+        
+        // Array with the strings needed for the lbox
+        var modal = ['<a id="close-lbox" class="item ir">Close</a>', '<div class="lbox-content">', '<input type="text" id="input-prompt-lbox" class="">','<div id="confirm-lbox">','<button type="button" id="btn-accept" class="btn">Accept</button>','<button type="button" id="btn-cancel" class="btn">Cancel</button>','</div>'];
+
+        if(data.opts.title){
+            modal[7] =  '<h2 class="lbox-title">' + data.opts.title + '</h2>';
+        }else{
+            modal[7] =  '';
+        }
+
         //Fade in the Popup and add close button
         switch(data.opts.type){
             case 'alert':
-                lbox.show().css({width: data.opts.width, height:data.opts.height})
-                    .prepend('<a id="close-lbox" class="item ir">Close</a>')
-                    .append('<div id="confirm-lbox"><button value="Accept" id="btn-accept" class="btn"><span><span>Accept</span></span></button></div>');
-                $('#confirm-lbox').css('left',data.opts.width/2 - $('#confirm-lbox').width()/2);    
+                lbox.html(modal[0] + modal[7] +  modal[1] + data.opts.msg + modal[6] + modal[3] + modal[4] + modal[6]);
+                
                 $('#confirm-lbox .btn').click(function(){
                     hidelBox(lbox, data);
                 })
                 break;
             case 'confirm':
-                lbox.fadeIn().css({width: data.opts.width, height: data.opts.height})
-                    .prepend('<a id="close-lbox" class="item ir">Close</a>')
-                    .append('<div id="confirm-lbox"><button value="Accept" id="btn-accept" class="btn"><span><span>Accept</span></span></button><button value="Cancel" id="btn-cancel" class="btn"><span><span>Cancel</span></span></button></div>');
-                $('#confirm-lbox').css('left',data.opts.width/2 - $('#confirm-lbox').width()/2);
-                
+                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6] + modal[3] + modal[4] + modal[5] + modal[6]);
+                                    
                 $('#confirm-lbox .btn').click(function(){
-                    hidelBox(lbox, data);
                     if($(this).val()=='Accept'){
                         data.opts.callbackOnConfirm();
                     }else{
                         data.opts.callbackOnCancel();
                     }
+                    hidelBox(lbox, data);
                 })
                 break;
             case 'prompt':
-                lbox.fadeIn().css({width: data.opts.width, height: data.opts.height})
-                    .prepend('<a id="close-lbox" class="item ir">Close</a>')
-                    .append('<input type="text" id="input-prompt-lbox" class="">')
-                    .append('<div id="confirm-lbox"><button value="Accept" id="btn-accept" class="btn"><span><span>Accept</span></span></button><button value="Cancel" id="btn-cancel" class="btn"><span><span>Cancel</span></span></button></div>');
-                $('#confirm-lbox').css('left',data.opts.width/2 - $('#confirm-lbox').width()/2);
-                that = $this;
+                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
+                
                 $('#confirm-lbox .btn').click(function(){
-                    hidelBox(lbox, data);
                     if($(this).val()=='Accept'){
                         data.opts.callbackOnConfirm($('#input-prompt-lbox').val());
                     }else{
                         data.opts.callbackOnCancel();
                     }
+                    hidelBox(lbox, data);
                 })
                 break;
             default:
-                lbox.fadeIn().css({width: data.opts.width, height: data.opts.height}).prepend('<a id="close-lbox" class="item ir">Close</a>');
+                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6]);
+        }
+
+        if(data.opts.buttons){
+            $('#confirm-lbox').empty();
+            for(var key in data.opts.buttons) {
+                var newID = key.replace(/\s+/gi,'');
+                $('#confirm-lbox').append('<button type="button" id="lbox-' + newID + '" class="btn">' + key + '</button>');
+                $('#lbox-' + newID).click(function(){
+                    data.opts.buttons[key]();    
+                    hidelBox(lbox, data);
+                })
+            }
         }
         
-        
-        //Define margin for center alignment (vertical + horizontal)
-        $this.mTop = (lbox.outerHeight()) / 2;
-        $this.mLeft = (lbox.outerWidth()) / 2;
-        
-        //Apply Margin to lboxup
+        lbox.css({width: data.opts.width, height: data.opts.height}).fadeIn();
+
+        //Define margin for center alignment (vertical + horizontal)        
+        // and apply it to the lbox
         lbox.css({ 
-            'margin-top' : -$this.mTop,
-            'margin-left' : -$this.mLeft
+            'margin-top' : -(lbox.outerHeight() / 2),
+            'margin-left' : -(lbox.outerWidth() / 2)
         });
         
         //Create Background 
@@ -259,8 +269,12 @@
      */
     $.fn[DREAMY_LITE_BOX].defaults = {
         type: 'modal', // String with the type of the message(alert, confirm, prompt, wait, modal).
-        event: 'click', // click & hover are allowed. "Manual" to manually show the litebox
+        event: 'click', // click & hover are allowed. "Manual" to manually show the litebox.
+        title: null, // Add a title to the lite box.
         msg: false, //String with the content for the message. It could be HTML or just text.
+        buttons: null, // Add extra buttons as an object where the key is the lable and the value the callback:
+                       //  {'myButton': function(){doSomething()}}
+        useDefaultBtns: true, // Use the defaults buttons
         bg: true, // Whaterver to use background or not
         bgColor: "#000", // Background color of the background layer
         useDefaultSizeType: true, // Boolean to use the default size for each type  
