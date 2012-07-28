@@ -12,12 +12,12 @@
 //       comment below describing this plugin.
 /**  
  * jQuery DreamyLiteBox Plugin
- * Version: x.x.x
- * URL: URL
- * Descripton: DESCRIPTION
- * Requires: JQUERY_VERSION, OTHER_PLUGIN(S), ETC.
- * Author: AUTHOR (AUTHOR_URL)
- * Copyright: Copyright (c) 2010 YOUR_NAME
+ * Version: 0.1
+ * URL: https://github.com/andres314/dreamyLiteBox
+ * Descripton: A super simple jQuery lite box
+ * Requires: jQuery
+ * Author: Andres (dreamsiteweb.com)
+ * Copyright: Copyright (c) 2012 Andres Pi
  * License: MIT
  *
  * Usage:
@@ -69,6 +69,17 @@
         $('#close-lbox, #fade').die();
     }
 
+    /**
+     * Get the length of an object
+     */
+    var objCounter = function(obj) {
+        var l=0;
+        $.each(obj, function(i, elem) {
+            l++;
+        });
+        return l;
+    }
+
     var showlBox = function($this, data, lbox){
         /*
          * Set width and height. 
@@ -87,25 +98,27 @@
         lbox.addClass('lbox lbox_' + data.opts.type);
         
         // Array with the strings needed for the lbox
-        var modal = ['<a id="close-lbox" class="item ir">Close</a>', '<div class="lbox-content">', '<input type="text" id="input-prompt-lbox" class="">','<div id="confirm-lbox">','<button type="button" id="btn-accept" class="btn">Accept</button>','<button type="button" id="btn-cancel" class="btn">Cancel</button>','</div>'];
+        var modal = ['<a id="close-lbox" class="item ir">Close</a>', '<div class="lbox-content">', '<input type="text" id="input-prompt-lbox">','<div id="confirm-lbox">','<button type="button" id="btn-accept" class="btn">Accept</button>','<button type="button" id="btn-cancel" class="btn">Cancel</button>','</div>'];
+                
+        modal[7] = (data.opts.title)?'<h2 class="lbox-title">' + data.opts.title + '</h2>':'';
 
-        if(data.opts.title){
-            modal[7] =  '<h2 class="lbox-title">' + data.opts.title + '</h2>';
-        }else{
-            modal[7] =  '';
-        }
+        var msg = (data.opts.msg)?data.opts.msg:'';
+
+        modal[4] = (data.opts.useDefaultBtns)?modal[4]:''; 
+        modal[5] = (data.opts.useDefaultBtns)?modal[5]:''; 
+
 
         //Fade in the Popup and add close button
         switch(data.opts.type){
             case 'alert':
-                lbox.html(modal[0] + modal[7] +  modal[1] + data.opts.msg + modal[6] + modal[3] + modal[4] + modal[6]);
+                lbox.html(modal[0] + modal[7] +  modal[1] + msg + modal[6] + modal[3] + modal[4] + modal[6]);
                 
                 $('#confirm-lbox .btn').click(function(){
                     hidelBox(lbox, data);
                 })
                 break;
             case 'confirm':
-                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6] + modal[3] + modal[4] + modal[5] + modal[6]);
+                lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[3] + modal[4] + modal[5] + modal[6]);
                                     
                 $('#confirm-lbox .btn').click(function(){
                     if($(this).val()=='Accept'){
@@ -117,7 +130,7 @@
                 })
                 break;
             case 'prompt':
-                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
+                lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
                 
                 $('#confirm-lbox .btn').click(function(){
                     if($(this).val()=='Accept'){
@@ -129,19 +142,22 @@
                 })
                 break;
             default:
-                lbox.html(modal[0] + modal[7] + modal[1] + data.opts.msg + modal[6]);
+                if(data.opts.useDefaultBtns){
+                    lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6]);
+                }else{
+                    lbox.html(modal[0] + modal[7] + modal[1] + msg +  modal[6] +  modal[3] + modal[6]);
+                }
         }
 
-        if(data.opts.buttons){
-            $('#confirm-lbox').empty();
-            for(var key in data.opts.buttons) {
-                var newID = key.replace(/\s+/gi,'');
-                $('#confirm-lbox').append('<button type="button" id="lbox-' + newID + '" class="btn">' + key + '</button>');
-                $('#lbox-' + newID).click(function(){
-                    data.opts.buttons[key]();    
-                    hidelBox(lbox, data);
-                })
-            }
+        if(typeof data.opts.buttons === 'object' && data.opts.buttons !== null){
+            $.each(data.opts.buttons, function(name, props) {
+                props = { click: props, text: name };
+                var button = $('<button type="button" class="btn">'+props.text+'</button>')
+                    .click(function() {
+                        props.click.apply($this, arguments);
+                    })
+                    .appendTo('#confirm-lbox');
+            });
         }
         
         lbox.css({width: data.opts.width, height: data.opts.height}).fadeIn();
@@ -205,7 +221,8 @@
             if (!data) {
                 $this.data(DREAMY_LITE_BOX, {
                     opts: opts,
-                    lbox: $('#' + DREAMY_LITE_BOX)
+                    lbox: $('#' + DREAMY_LITE_BOX),
+                    target : $this
                 });
             }
 
@@ -272,8 +289,10 @@
         event: 'click', // click & hover are allowed. "Manual" to manually show the litebox.
         title: null, // Add a title to the lite box.
         msg: false, //String with the content for the message. It could be HTML or just text.
-        buttons: null, // Add extra buttons as an object where the key is the lable and the value the callback:
+        buttons: null, // Add extra buttons as an object where the key is the label and the value the callback:
                        //  {'myButton': function(){doSomething()}}
+                       // For close the lite box you must add the close method to the callback like this:
+                       //  {'myButton': function(){doSomething();$(this).dreamyLiteBox('hide')}}
         useDefaultBtns: true, // Use the defaults buttons
         bg: true, // Whaterver to use background or not
         bgColor: "#000", // Background color of the background layer
