@@ -1,0 +1,156 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>DreamyLiteBox | A super simple jQuery lite box</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+        <!-- General style sheet -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Light box style sheet -->
+        <link rel="stylesheet" href="css/dreamyLiteBox.min.css">
+
+        <!--
+        * modernizr:
+        * open-source JavaScript library that helps you
+        * build the next generation of HTML5 and CSS3-powered websites.
+        * web: http://www.modernizr.com/
+        -->
+        <script src="js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+<body>
+
+<div id="container">
+	<header>
+            <h1>DreamyLiteBox</h1>
+            <h2>A super simple jQuery lite box</h2>
+	</header>
+	<div id="main" role="main">
+            <ul>
+                <li><a class="msg-alert">Alert Something</a></li>
+                <li><a class="msg-confirm">Confirm Something</a></li>
+                <li><a class="msg-prompt">Prompt Something</a></li>
+                <li><a class="msg-wait">wait Something</a></li>
+                <li><a class="msg-modal">Just modal</a></li>
+                <li><a class="msg-custom">Custom Buttons</a></li>
+            </ul>
+            
+            <div id="writeHere"></div>
+            
+	</div>
+	<footer id="page_footer">      
+            <a href="https://github.com/andres314/dreamyLiteBox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+            2012 <a href="http://labs.dreamsiteweb.com/" target="_blank">DreamSite Web labs</a> - Find the source at <a href="https://github.com/andres314/dreamyLiteBox" target="_blank">GitHub</a>
+        </footer>
+</div> <!--! end of #container -->
+
+<!-- 
+****
+scripts
+****
+-->
+<!-- jQuery Framework -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.0.min.js"><\/script>')</script>
+    
+<!-- lBox JS -->
+<script src="js/libs/jquery.dreamyLiteBox.js"></script>
+    
+<!-- Script with the examples for the messages -->
+<script>
+    
+/*
+ * Examples functions:
+ */
+// ALERT
+$('.msg-alert').dreamyLiteBox({
+    type:'alert',
+    title:false,
+    bg:false,
+    msg:'Alert! Alert! Alert!'
+});
+
+// CONFIRM
+$('.msg-confirm').dreamyLiteBox({type:'confirm',msg:'This is a confirm message and has some callback', title: false,
+    callbackOnConfirm:writeSomething,
+    callbackOnCancel: function(){
+        document.getElementById('writeHere').innerHTML += 'You cancel. <br>';
+    },
+    callbackOnOpen: function(){
+        document.getElementById('writeHere').innerHTML += 'You open the confirm box. <br>';
+    }
+ });
+
+// PROMPT
+$('.msg-prompt').dreamyLiteBox({
+    type:'prompt',
+    msg:'Write something',
+    callbackOnConfirm:writeSomething
+});
+
+// Wait
+$('.msg-wait').dreamyLiteBox({
+    type:'wait',
+    title:false,
+    msg:'Please wait',
+    callbackOnOpen: function(){
+        document.getElementById('writeHere').innerHTML += 'The wait start. <br>';
+    },
+    callbackOnClose: function(){
+        document.getElementById('writeHere').innerHTML += 'The wait end. <br>';
+    }
+});
+
+// Modal
+$('.msg-modal').dreamyLiteBox({
+    type:'modal',
+    msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
+});
+
+// Custom buttons
+$('.msg-custom').dreamyLiteBox({
+    type:'modal',
+    msg:'This is a modal with custombuttons',
+    useDefaultBtns:false,
+    buttons: {
+        'A custom buttom': function() {
+            document.getElementById('writeHere').innerHTML += 'you press your button.<br>';
+        },
+        'A custom cancel button': function() {
+            $(this).dreamyLiteBox('close');
+        }
+    }
+ });
+
+$('.msg-wait').click(function(){
+    setTimeout(endWait,5000);
+})
+
+// Used as example with the wait message
+function endWait(){
+    $('.msg-wait').dreamyLiteBox('close');
+}
+
+
+// Used as example with the prompt and confirm message.
+function writeSomething(prompt){
+    if(prompt){
+        document.getElementById('writeHere').innerHTML += prompt + '<br>';
+    }else{
+        document.getElementById('writeHere').innerHTML += 'I wrote this after you confirm.<br>';
+    }
+}
+
+</script>
+    
+<!-- end scripts-->
+
+</body>
+</html>

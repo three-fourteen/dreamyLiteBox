@@ -1,22 +1,15 @@
-/**
- * @fileoverview DreamyLiteBox v1.0 - jQuery lite box widget
- * @author andres(at)dreamsiteweb.com (Andres Pi)
- *
- * Andres Leandro Pi:
- *   gplus.to/andres_314
- *   twitter.com/andres_314
- *   github.com/andres314
- */
-
-// TODO: Delete the above banner comment and fill out this real banner
-//       comment below describing this plugin.
 /**  
  * jQuery DreamyLiteBox Plugin
- * Version: 0.1
+ * Version: 0.5
  * URL: https://github.com/andres314/dreamyLiteBox
  * Descripton: A super simple jQuery lite box
  * Requires: jQuery
  * Author: Andres (dreamsiteweb.com)
+ *   gplus.to/andres_314
+ *   bit.ly/apiLinkedin
+ *   twitter.com/andres_314
+ *   github.com/andres314
+ *   
  * Copyright: Copyright (c) 2012 Andres Pi
  * License: MIT
  *
@@ -32,7 +25,7 @@
  *   $(selector).dreamyLiteBox('destroy');
  *
  *   // Call a public method on an init'd dreamyLiteBox element.
- *   $(selector).dreamyLiteBox('publicMethod2', 'foo', 'bar');
+ *   $(selector).dreamyLiteBox('close');
  *
  * For documentation on the supported options, see the bottom of this file.
  */
@@ -54,54 +47,45 @@
         $(document).bind('keydown.' + DREAMY_LITE_BOX, function (e) {
             if (e.keyCode === 27) { // ESC
                 e.preventDefault();
-                hidelBox(lbox, data);
+                closelBox(lbox, data);
             }
         });
         //Close Popups and Fade Layer
         var elements = (data.opts.type=='alert')?'#close-lbox':'#close-lbox, #fade';
         //When clicking on the close or fade layer...
         $(elements).live('click', function() { 
-            hidelBox(lbox, data);
+            closelBox(lbox, data);
         }); 
     }
+    
     var unbindEvents = function(){
         $(document).unbind('keydown.' + DREAMY_LITE_BOX);
         $('#close-lbox, #fade').die();
     }
 
     /**
-     * Get the length of an object
+     * Open the lite box
      */
-    var objCounter = function(obj) {
-        var l=0;
-        $.each(obj, function(i, elem) {
-            l++;
-        });
-        return l;
-    }
-
-    var showlBox = function($this, data, lbox){
-        /*
-         * Set width and height. 
-         */
-        if(data.opts.type == 'wait'){
-            data.opts.width = (data.useDefaultSizeType)?data.opts.width:90;
-            data.opts.height = (data.useDefaultSizeType)?data.opts.height:24;
-        }else if(data.opts.type == 'prompt'){
-            data.opts.width = (data.useDefaultSizeType)?data.opts.width:530;
-            data.height = (data.useDefaultSizeType)?data.opts.height:84;
-        }else if(data.opts.type == 'alert'){
-            data.opts.width = (data.useDefaultSizeType)?data.opts.width:250;
-            data.height = (data.useDefaultSizeType)?data.opts.height:50;
-        }
+    var openlBox = function($this, data, lbox){
         //Add the class
         lbox.addClass('lbox lbox_' + data.opts.type);
         
         // Array with the strings needed for the lbox
-        var modal = ['<a id="close-lbox" class="item ir">Close</a>', '<div class="lbox-content">', '<input type="text" id="input-prompt-lbox">','<div id="confirm-lbox">','<button type="button" id="btn-accept" class="btn">Accept</button>','<button type="button" id="btn-cancel" class="btn">Cancel</button>','</div>'];
-                
-        modal[7] = (data.opts.title)?'<h2 class="lbox-title">' + data.opts.title + '</h2>':'';
-
+        var modal = [
+                    '<a id="close-lbox" class="icon-cross">Close</a>',
+                    '<div class="lbox-content">',
+                    '<input type="text" id="input-prompt-lbox">',
+                    '<div id="confirm-lbox">',
+                    '<button type="button" id="btn-accept" class="btn">Accept</button>',
+                    '<button type="button" id="btn-cancel" class="btn">Cancel</button>',
+                    '</div>'
+                    ];
+        
+        if(typeof data.opts.title === 'boolean'){        
+            modal[7] = (data.opts.title)?'<h2 class="lbox-title">' + (($this.val())?$this.val():$this.text()) + '</h2>':'';
+        }else if(typeof data.opts.title === 'string'){
+            modal[7] = '<h2 class="lbox-title">' + data.opts.title + '</h2>';
+        }
         var msg = (data.opts.msg)?data.opts.msg:'';
 
         modal[4] = (data.opts.useDefaultBtns)?modal[4]:''; 
@@ -111,48 +95,64 @@
         //Fade in the Popup and add close button
         switch(data.opts.type){
             case 'alert':
+                // Set the modal content
                 lbox.html(modal[0] + modal[7] +  modal[1] + msg + modal[6] + modal[3] + modal[4] + modal[6]);
-                
+                // Add the click event to the buttons
                 $('#confirm-lbox .btn').click(function(){
-                    hidelBox(lbox, data);
+                    closelBox(lbox, data);
                 })
+                // Set the size
+                if(data.opts.useDefaultSizeType){
+                    data.opts.width = 250;
+                }
                 break;
             case 'confirm':
+                // Set the modal content
                 lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[3] + modal[4] + modal[5] + modal[6]);
-                                    
+                // Set the size
                 $('#confirm-lbox .btn').click(function(){
-                    if($(this).val()=='Accept'){
-                        data.opts.callbackOnConfirm();
+                    if($(this).text()=='Accept'){
+                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm();
                     }else{
-                        data.opts.callbackOnCancel();
+                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel();
                     }
-                    hidelBox(lbox, data);
+                    closelBox(lbox, data);
                 })
                 break;
             case 'prompt':
+                // Set the modal content
                 lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
-                
+                // Set the size
                 $('#confirm-lbox .btn').click(function(){
-                    if($(this).val()=='Accept'){
-                        data.opts.callbackOnConfirm($('#input-prompt-lbox').val());
+                    if($(this).text()=='Accept'){
+                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm($('#input-prompt-lbox').val());
                     }else{
-                        data.opts.callbackOnCancel();
+                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel();
                     }
-                    hidelBox(lbox, data);
+                    closelBox(lbox, data);
                 })
+                // Set the size
+                if(data.opts.useDefaultSizeType){
+                    data.opts.width = 530;
+                }
                 break;
             default:
+                // Set the modal content
                 if(data.opts.useDefaultBtns){
                     lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6]);
                 }else{
                     lbox.html(modal[0] + modal[7] + modal[1] + msg +  modal[6] +  modal[3] + modal[6]);
+                }
+                if(data.opts.type == 'wait' && data.opts.useDefaultSizeType){
+                    data.opts.width = 90;
+                    data.opts.height = 24;
                 }
         }
 
         if(typeof data.opts.buttons === 'object' && data.opts.buttons !== null){
             $.each(data.opts.buttons, function(name, props) {
                 props = { click: props, text: name };
-                var button = $('<button type="button" class="btn">'+props.text+'</button>')
+                $('<button type="button" class="btn">'+props.text+'</button>')
                     .click(function() {
                         props.click.apply($this, arguments);
                     })
@@ -175,18 +175,18 @@
         $this.bg = $('#fade');
         //Fade in the fade layer
         $this.bg.css('background',(data.opts.bg)?data.opts.bgColor:'transparent').fadeIn(); 
-        if(data.type != 'wait'){
+        if(data.opts.type != 'wait'){
             bindEvents($this);  
         }
 
-        // Callback on show
-        data.opts.callbackOnShow();
+        // Callback on open
+        if($.isFunction(data.opts.callbackOnOpen))data.opts.callbackOnOpen();
     }
 
-
-
-
-    var hidelBox = function(lbox, data){
+    /**
+     * Close the lite box
+     */
+    var closelBox = function(lbox, data){
         //var lbox = this;
         function callback(){
             $('#fade, #close-lbox, #confirm-lbox').remove();
@@ -201,7 +201,8 @@
                 callback();
             });
         }
-        data.opts.callbackOnHide();
+        // Close callback
+        if($.isFunction(data.opts.callbackOnClose))data.opts.callbackOnClose();
         unbindEvents();
     }
 
@@ -216,6 +217,13 @@
             if(!$('#'+ DREAMY_LITE_BOX).length){
                 $('body').append('<div id="' + DREAMY_LITE_BOX + '" />'); 
             }            
+
+            //Check if the content is an object
+            if(typeof opts.msg === 'object'){
+                var clone = opts.msg.clone();
+                opts.msg.remove();
+                opts.msg = clone.html();
+            }
             
             var data  = $this.data(DREAMY_LITE_BOX);
             if (!data) {
@@ -230,7 +238,7 @@
             if(opts.event != 'manual'){
                 $this.bind(opts.event + '.' + DREAMY_LITE_BOX,
                     function(){
-                        showlBox($this, $this.data(DREAMY_LITE_BOX), $this.data(DREAMY_LITE_BOX).lbox);
+                        openlBox($this, $this.data(DREAMY_LITE_BOX), $this.data(DREAMY_LITE_BOX).lbox);
                 });
             }
 
@@ -245,18 +253,20 @@
         })},
 
         //type,message,bg,callback,width,height
-        show: function(msg){  return this.each(function() {       
+        open: function(msg){  return this.each(function() {       
             var $this = $(this),
                 data  = $this.data(DREAMY_LITE_BOX),
                 lbox = data.lbox;
             data.opts.msg = (msg)?msg:data.opts.msg;
-            showlBox($this, data, lbox);
+            if($.isFunction(data.opts.callbackBeforeOpen))data.opts.callbackBeforeOpen();
+            openlBox($this, data, lbox);
         })},
-        hide: function(){  return this.each(function() {
+        close: function(){  return this.each(function() {
             var $this = $(this);
             var data  = $this.data(DREAMY_LITE_BOX);
             var lbox = data.lbox;
-            hidelBox(lbox, data);
+            if($.isFunction(data.opts.callbackBeforeClose))data.opts.callbackBeforeClose();
+            closelBox(lbox, data);
         })}
 
 
@@ -286,22 +296,24 @@
      */
     $.fn[DREAMY_LITE_BOX].defaults = {
         type: 'modal', // String with the type of the message(alert, confirm, prompt, wait, modal).
-        event: 'click', // click & hover are allowed. "Manual" to manually show the litebox.
-        title: null, // Add a title to the lite box.
-        msg: false, //String with the content for the message. It could be HTML or just text.
+        event: 'click', // click & hover are allowed. "Manual" to manually open the litebox.
+        title: true, // Add a title to the lite box. False: no title, True: button/link value/text, String: title text.
+        msg: false, //String(HTML or just text) or jQuery object with the content for the message.
         buttons: null, // Add extra buttons as an object where the key is the label and the value the callback:
                        //  {'myButton': function(){doSomething()}}
                        // For close the lite box you must add the close method to the callback like this:
-                       //  {'myButton': function(){doSomething();$(this).dreamyLiteBox('hide')}}
+                       //  {'myButton': function(){doSomething();$(this).dreamyLiteBox('close')}}
         useDefaultBtns: true, // Use the defaults buttons
         bg: true, // Whaterver to use background or not
         bgColor: "#000", // Background color of the background layer
         useDefaultSizeType: true, // Boolean to use the default size for each type  
         width: 530, // Number for a custom with. Optional, if is undefined use a default value.
-        height: 100, //Number for a custom height. Optional, if is undefined use a default value.
-        callbackOnConfirm: function(){}, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
-        callbackOnCancel: function(){}, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
-        callbackOnShow: function(){}, // Callback for appear function
-        callbackOnHide: function(){} // Callback for disappear function
+        height: 150, //Number for a custom height. Optional, if is undefined use a default value.
+        callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
+        callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
+        callbackOnOpen: null, // Callback for appear function
+        callbackOnClose: null, // Callback for disappear function
+        callbackBeforeOpen: null, // Callback before open the lite box
+        callbackBeforeClose: null // Callback before close the lite box
     };
 })(jQuery);

@@ -1,0 +1,214 @@
+/* 
+    Document   : jquery.dreamyLiteBox
+    Created on : Nov 16, 2011, 5:40:39 PM
+    Author     : Andres Pi
+    Description:
+        Styles for the dreamyLitebox plugin.
+*/
+
+//Vars
+//-------------
+@main_color: #A17ABB;
+@white:      #fff;
+@black:      #000;
+@gray:       #ccc;
+//End Vars
+
+//Mixins 
+//-------------
+// CSS image replacement
+// -------------------------
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+.hide-text(@display: block) {
+  display: @display; 
+  border: 0;
+  text-indent: -999em;
+  overflow: hidden; 
+  background-repeat: no-repeat;
+  text-align: left;
+  direction: ltr; 
+  *line-height: 0;
+}
+
+// Drop shadows
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+      -ms-box-shadow: @shadow;
+       -o-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+
+// Border Radius
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+      -ms-border-radius: @radius;
+       -o-border-radius: @radius;
+          border-radius: @radius;
+}
+
+// Text Shadow
+.text-shadow(@shadow){
+  -webkit-text-shadow: @shadow;
+     -moz-text-shadow: @shadow;
+      -ms-text-shadow: @shadow;   
+       -o-text-shadow: @shadow;
+          text-shadow: @shadow;   
+}
+
+// inline-block
+.inline-block() {
+  display:inline-block;
+  /* IE7 inline-block hack */
+  *display: inline;
+  *zoom: 1;
+}
+
+// Opacity
+.opacity(@opacity) {
+  opacity: @opacity / 100;
+  filter: ~"alpha(opacity=@{opacity})";
+}
+
+// Gradients
+#gradient {
+  .horizontal(@startColor: #555, @endColor: #333) {
+    background-color: @endColor;
+    background-image: -moz-linear-gradient(left, @startColor, @endColor); // FF 3.6+
+    background-image: -ms-linear-gradient(left, @startColor, @endColor); // IE10
+    background-image: -webkit-gradient(linear, 0 0, 100% 0, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(left, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(left, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(left, @startColor, @endColor); // Le standard
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@startColor,@endColor)); // IE9 and down
+  }
+  .vertical(@startColor: #555, @endColor: #333) {
+    background-color: mix(@startColor, @endColor, 60%);
+    background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
+    background-image: -ms-linear-gradient(top, @startColor, @endColor); // IE10
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(top, @startColor, @endColor); // The standard
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@startColor,@endColor)); // IE9 and down
+  }
+}
+
+//////
+//End mixins
+
+
+#close-lbox {    
+    background: lighten(@main_color,15%) url(../img/cross.png) no-repeat 4px 4px;
+    .border-radius(9px);
+    .box-shadow(0px 1px 0px #666 inset);
+    cursor: pointer;
+    float: right;
+    .hide-text();
+    height: 17px;
+    margin: 6px 6px 0 0;
+    position: relative; 
+    width: 17px;
+    z-index: 10001;
+}
+.lbox {
+    background: @white;
+    .box-shadow(1px 1px 2px lighten(@black, 10%));
+    .border-radius(3px);
+    display: none;
+    font-size: 1.2em;
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    z-index: 10000;
+
+    h2{
+        border:1px solid lighten(@main_color, 5%);
+        color: @white;
+        font-size:14px;
+        #gradient > .vertical(@main_color, lighten(@main_color, 10%));
+        margin: 0 0 10px; 
+        padding: 5px 10px 4px;
+        text-align:left;
+        text-transform:uppercase;
+        .text-shadow(0 0 1px @gray);
+        .border-radius(3px 3px 0 0);
+    }
+    input[type="text"],
+    .uneditable-input{
+        height: auto
+    }
+    label span{
+        .inline-block();
+        font-size: 16px;
+        padding-bottom: 5px
+    }
+}
+.lbox-content{
+    padding: 12px 15px; 
+}
+/* Wait */
+.lbox_wait{
+    background: @white url(../img/wait.gif) no-repeat center 20px;
+    padding: 40px 15px 12px;
+    text-align: center;
+
+    .lbox-content{padding: 0}
+    #close-lbox{display: none}
+}
+
+#fade {
+    background: @black;
+    display: none;
+    height: 100%;
+    left: 0;
+    .opacity(75);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+/*confirm-lbox*/
+#confirm-lbox{
+    bottom: 0;
+    height: 30px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+
+    .btn{
+        border: 1px solid @main_color;
+        .border-radius(3px);
+        color: darken(@main_color, 10%);
+        cursor:pointer;
+        display: inline-block;
+        .inline-block();
+        font-weight: bold;
+        margin: 0 5px;
+        padding: 2px;
+    }
+}
+
+.lbox_alert{
+    text-align: center;
+}
+
+/*prompt*/ 
+#input-prompt-lbox{
+    display: block;
+    margin:0 auto;
+    width: 75%;
+}
+
+/*title*/
+.lbox-title{
+    font-size:16px;
+    line-height:1.5;
+    margin: 0 0 13px;
+    padding:0 15px
+}
