@@ -130,9 +130,9 @@
             </li>
 
             <li>
-              <a class="msg-modal">A modal using a hidden <code>div</code></a>
+              <a class="msg-modal-content">A modal using a hidden <code>div</code></a>
               <pre><code>
-                $('.msg-modal').dreamyLiteBox({
+                $('.msg-modal-content').dreamyLiteBox({
                     type:'modal',
                     msg:$('#content_modal')
                 });
@@ -160,7 +160,9 @@
             </li>
           </ul>
             
-            <div id="writeHere" styles="height:150px; border:1px solid #D5000D"></div>
+            <div id="writeHere" style="padding:10px;height:100px; border:2px solid #D5000D; width:200px">
+              Callback log:<br>
+            </div>
 
           <h3>Theming</h3>
 
@@ -245,10 +247,10 @@
     });
 
     // Modal using HTML from the page
-    /*$('.msg-modal-html').dreamyLiteBox({
+    $('.msg-modal-content').dreamyLiteBox({
         type:'modal',
-        msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
-    });*/
+        msg:'$('#content_modal')
+    });
 
     // Custom buttons
     $('.msg-custom').dreamyLiteBox({
