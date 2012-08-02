@@ -171,6 +171,9 @@ code, pre {
   margin-bottom: 30px;
   font-size: 14px;
 }
+li code, li pre {
+  font-size:12px;
+}
 
 code {
   background-color: #f2f2f2;
@@ -185,6 +188,9 @@ pre {
   text-shadow: none;
   overflow: auto;
 }
+
+li pre {padding: 8px;}
+
 pre code {
   color: #f2f2f2;
   background-color: #303030;
@@ -336,6 +342,8 @@ footer a:hover {
 .clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
+
+.hide{display: none}
 
 /* #Media Queries
 ================================================== */
