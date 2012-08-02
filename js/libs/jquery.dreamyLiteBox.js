@@ -152,7 +152,7 @@
         if(typeof data.opts.buttons === 'object' && data.opts.buttons !== null){
             $.each(data.opts.buttons, function(name, props) {
                 props = { click: props, text: name };
-                $('<button type="button" class="btn">'+props.text+'</button>')
+                $('<button type="button" class="btn" id="'+props.text.replace(/\s/g, '')+'">'+props.text+'</button>')
                     .click(function() {
                         props.click.apply($this, arguments);
                     })
