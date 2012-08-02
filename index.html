@@ -37,43 +37,67 @@
         <section id="main_content">
           <h3>Overview</h3>
 
-<p>This a super simple multipurpose jQuery lite box. You can use it as an alert popup, a confirm box, a prompt box, a wait popup or modal window. Using the default buttons, your custom buttons or none.</p>
+          <p>This a super simple multipurpose jQuery lite box. You can use it as an alert popup, a confirm box, a prompt box, a wait popup or modal window. Using the default buttons, your custom buttons or none.</p>
 
-<pre><code>
-type: 'modal', // String with the type of the message(alert, confirm, prompt, wait, modal).
-event: 'click', // click & hover are allowed. "Manual" to manually open the litebox.
-title: true, // Add a title to the lite box. False: no title, True: button/link value/text, String: title text.
-msg: false, //String(HTML or just text) or jQuery object with the content for the message.
-buttons: null, // Add extra buttons as an object where the key is the label and the value the callback: 
-               // {'myButton': function(){doSomething()}} 
-               // For close the lite box you must add the close method to the callback like this: 
-               // {'myButton': function(){doSomething();$(this).dreamyLiteBox('close')}}
-useDefaultBtns: true, // Use the defaults buttons
-bg: true, // Whaterver to use background or not
-bgColor: "#000", // Background color of the background layer
-useDefaultSizeType: true, // Boolean to use the default size for each type
-width: 530, // Number for a custom with. Optional, if is undefined use a default value.
-height: 150, //Number for a custom height. Optional, if is undefined use a default value.
-callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
-callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
-callbackOnOpen: null, // Callback for appear function
-callbackOnClose: null, // Callback for disappear function
-callbackBeforeOpen: null, // Callback before open the lite box
-callbackBeforeClose: null // Callback before close the lite box
-</code></pre>
+          <pre><code>
+          type: 'modal', // String with the type of the message(alert, confirm, prompt, wait, modal).
+          event: 'click', // click & hover are allowed. "Manual" to manually open the litebox.
+          title: true, // Add a title to the lite box. False: no title, True: button/link value/text, String: title text.
+          msg: false, //String(HTML or just text) or jQuery object with the content for the message.
+          buttons: null, // Add extra buttons as an object where the key is the label and the value the callback: 
+                         // {'myButton': function(){doSomething()}} 
+                         // For close the lite box you must add the close method to the callback like this: 
+                         // {'myButton': function(){doSomething();$(this).dreamyLiteBox('close')}}
+          useDefaultBtns: true, // Use the defaults buttons
+          bg: true, // Whaterver to use background or not
+          bgColor: "#000", // Background color of the background layer
+          useDefaultSizeType: true, // Boolean to use the default size for each type
+          width: 530, // Number for a custom with. Optional, if is undefined use a default value.
+          height: 150, //Number for a custom height. Optional, if is undefined use a default value.
+          callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
+          callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
+          callbackOnOpen: null, // Callback for appear function
+          callbackOnClose: null, // Callback for disappear function
+          callbackBeforeOpen: null, // Callback before open the lite box
+          callbackBeforeClose: null // Callback before close the lite box
+          </code></pre>
 
-<h3>Theming</h3>
+          
+          <h3>Examples</h3>
 
-<p>You can easily edit the <code>dreamyLiteBox.css</code> with your own styles.
-If you are handy with <a href="lesscss.org" target="_blank">LESS</a>, you also have the <code>dreamyLiteBox.less</code> file.</p>
+          <ul>
+                <li>
+                  <a class="msg-alert">Alert Something</a>
+                  <pre><code>
+                    $('.msg-alert').dreamyLiteBox({
+                        type:'alert',
+                        title:false,
+                        bg:false,
+                        msg:'Alert! Alert! Alert!'
+                    });
+                  </code></pre>
+                </li>
+                <li><a class="msg-confirm">Confirm Something</a></li>
+                <li><a class="msg-prompt">Prompt Something</a></li>
+                <li><a class="msg-wait">wait Something</a></li>
+                <li><a class="msg-modal">Just modal</a></li>
+                <li><a class="msg-custom">Custom Buttons</a></li>
+            </ul>
+            
+            <div id="writeHere"></div>
 
-<!--h3>Authors and Contributors</h3>
+          <h3>Theming</h3>
 
-<p>I'm You can <a href="https://github.com/blog/821" class="user-mention">@andres</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p-->
+          <p>You can easily edit the <code>dreamyLiteBox.css</code> with your own styles.
+          If you are handy with <a href="lesscss.org" target="_blank">LESS</a>, you also have the <code>dreamyLiteBox.less</code> file.</p>
 
-<h3>Support or Contact</h3>
+          <!--h3>Authors and Contributors</h3>
 
-<p>Having trouble with the plugin? You can create an<a href="https://github.com/andres314/dreamyLiteBox/issues">issue</a> or contact <a href="mailto:andres@dreamsiteweb.com">andres@dreamsiteweb.com</a> and I’ll try to help you sort it out.</p>
+          <p>I'm You can <a href="https://github.com/blog/821" class="user-mention">@andres</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p-->
+
+          <h3>Support or Contact</h3>
+
+          <p>Having trouble with the plugin? You can create an<a href="https://github.com/andres314/dreamyLiteBox/issues">issue</a> or contact <a href="mailto:andres@dreamsiteweb.com">andres@dreamsiteweb.com</a> and I’ll try to help you sort it out.</p>
         </section>
 
         <footer>
@@ -92,5 +116,100 @@ If you are handy with <a href="lesscss.org" target="_blank">LESS</a>, you also h
         
     <!-- lBox JS -->
     <script src="javascript/libs/jquery.dreamyLiteBox.js"></script>
+
+    <!-- Script with the examples for the messages -->
+    <script>
+        
+    /*
+     * Examples functions:
+     */
+    // ALERT
+    $('.msg-alert').dreamyLiteBox({
+        type:'alert',
+        title:false,
+        bg:false,
+        msg:'Alert! Alert! Alert!'
+    });
+
+    // CONFIRM
+    $('.msg-confirm').dreamyLiteBox({type:'confirm',msg:'This is a confirm message and has some callback', title: false,
+        callbackOnConfirm:writeSomething,
+        callbackOnCancel: function(){
+            document.getElementById('writeHere').innerHTML += 'You cancel. <br>';
+        },
+        callbackOnOpen: function(){
+            document.getElementById('writeHere').innerHTML += 'You open the confirm box. <br>';
+        }
+     });
+
+    // PROMPT
+    $('.msg-prompt').dreamyLiteBox({
+        type:'prompt',
+        msg:'Write something',
+        callbackOnConfirm:writeSomething
+    });
+
+    // WAIT
+    $('.msg-wait').dreamyLiteBox({
+        type:'wait',
+        title:false,
+        msg:'Please wait',
+        callbackOnOpen: function(){
+            document.getElementById('writeHere').innerHTML += 'The wait start. <br>';
+        },
+        callbackOnClose: function(){
+            document.getElementById('writeHere').innerHTML += 'The wait end. <br>';
+        }
+    });
+
+    // Modal
+    $('.msg-modal').dreamyLiteBox({
+        type:'modal',
+        msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
+    });
+
+    // Modal using HTML from the page
+    $('.msg-modal-html').dreamyLiteBox({
+        type:'modal',
+        msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
+    });
+
+    // Custom buttons
+    $('.msg-custom').dreamyLiteBox({
+        type:'modal',
+        msg:'This is a modal with custombuttons',
+        useDefaultBtns:false,
+        buttons: {
+            'A custom buttom': function() {
+                document.getElementById('writeHere').innerHTML += 'you press your button.<br>';
+            },
+            'A custom cancel button': function() {
+                $(this).dreamyLiteBox('close');
+            }
+        }
+    });
+
+    // Set a time out for the wait lite box
+    $('.msg-wait').click(function(){
+        setTimeout(endWait,5000);
+    })
+
+    // Used as example with the wait lite box to close it
+    function endWait(){
+        $('.msg-wait').dreamyLiteBox('close');
+    }
+
+
+    // Used as example with the prompt and confirm message.
+    function writeSomething(prompt){
+        if(prompt){
+            document.getElementById('writeHere').innerHTML += prompt + '<br>';
+        }else{
+            document.getElementById('writeHere').innerHTML += 'I wrote this after you confirm.<br>';
+        }
+    }
+
+    </script>
+    
   </body>
 </html>
