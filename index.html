@@ -39,28 +39,7 @@
 
           <p>This a super simple multipurpose jQuery lite box. You can use it as an alert popup, a confirm box, a prompt box, a wait popup or modal window. Using the default buttons, your custom buttons or none.</p>
 
-          <pre><code>
-          type: 'modal', // String with the type of the message(alert, confirm, prompt, wait, modal).
-          event: 'click', // click & hover are allowed. "Manual" to manually open the litebox.
-          title: true, // Add a title to the lite box. False: no title, True: button/link value/text, String: title text.
-          msg: false, //String(HTML or just text) or jQuery object with the content for the message.
-          buttons: null, // Add extra buttons as an object where the key is the label and the value the callback: 
-                         // {'myButton': function(){doSomething()}} 
-                         // For close the lite box you must add the close method to the callback like this: 
-                         // {'myButton': function(){doSomething();$(this).dreamyLiteBox('close')}}
-          useDefaultBtns: true, // Use the defaults buttons
-          bg: true, // Whaterver to use background or not
-          bgColor: "#000", // Background color of the background layer
-          useDefaultSizeType: true, // Boolean to use the default size for each type
-          width: 530, // Number for a custom with. Optional, if is undefined use a default value.
-          height: 150, //Number for a custom height. Optional, if is undefined use a default value.
-          callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
-          callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
-          callbackOnOpen: null, // Callback for appear function
-          callbackOnClose: null, // Callback for disappear function
-          callbackBeforeOpen: null, // Callback before open the lite box
-          callbackBeforeClose: null // Callback before close the lite box
-          </code></pre>
+          <script src="https://gist.github.com/3250503.js?file=gistfile1.js"></script>
 
           
           <h3>Examples</h3>
@@ -70,99 +49,37 @@
           <ul>
             <li>
               <a class="msg-alert">Alert Something</a>
-              <pre><code>
-                $('.msg-alert').dreamyLiteBox({
-                    type:'alert',
-                    title:false,
-                    bg:false,
-                    msg:'Alert! Alert! Alert!'
-                });
-              </code></pre>
             </li>
             <li>
               <a class="msg-confirm">Confirm Something</a>
-              <pre><code>
-                $('.msg-confirm').dreamyLiteBox({type:'confirm',msg:'This is a confirm message and has some callback', title: false,
-                  callbackOnConfirm:writeSomething,
-                  callbackOnCancel: function(){
-                    document.getElementById('writeHere').innerHTML += 'You cancel. <br>';
-                  },
-                  callbackOnOpen: function(){
-                    document.getElementById('writeHere').innerHTML += 'You open the confirm box. <br>';
-                  }
-                });
-              </code></pre>
             </li>
             <li>
               <a class="msg-prompt">Prompt Something</a>
-              <pre><code>
-                $('.msg-prompt').dreamyLiteBox({
-                    type:'prompt',
-                    msg:'Write something',
-                    callbackOnConfirm:writeSomething
-                });
-              </code></pre>                
             </li>
             <li>
               <a class="msg-wait">wait Something</a>
-              <pre><code>
-                $('.msg-wait').dreamyLiteBox({
-                    type:'wait',
-                    title:false,
-                    msg:'Please wait',
-                    callbackOnOpen: function(){
-                        document.getElementById('writeHere').innerHTML += 'The wait start. <br>';
-                    },
-                    callbackOnClose: function(){
-                        document.getElementById('writeHere').innerHTML += 'The wait end. <br>';
-                    }
-                });
-              </pre></code>
             </li>
             <li>
               <a class="msg-modal">Just modal</a>
-              <pre><code>
-                $('.msg-modal').dreamyLiteBox({
-                    type:'modal',
-                    msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
-                });
-              </pre></code>
             </li>
 
             <li>
               <a class="msg-modal-content">A modal using a hidden <code>div</code></a>
-              <pre><code>
-                $('.msg-modal-content').dreamyLiteBox({
-                    type:'modal',
-                    msg:$('#content_modal')
-                });
-              </pre></code>
               <div class='hide' id="content_modal"><p>This is the content that was hidden for the modal window.</p></div>
             </li>
 
             <li>
               <a class="msg-custom">Custom Buttons</a>
-              <pre><code>
-                $('.msg-custom').dreamyLiteBox({
-                    type:'modal',
-                    msg:'This is a modal with custombuttons',
-                    useDefaultBtns:false,
-                    buttons: {
-                        'A custom buttom': function() {
-                            document.getElementById('writeHere').innerHTML += 'you press your button.<br>';
-                        },
-                        'A custom cancel button': function() {
-                            $(this).dreamyLiteBox('close');
-                        }
-                    }
-                });
-              </pre></code>
             </li>
           </ul>
             
             <div id="writeHere" style="padding:10px;height:100px; border:2px solid #D5000D; width:200px">
               Callback log:<br>
             </div>
+
+          <h3>Code</h3>
+
+          <script src="https://gist.github.com/3250575.js?file=gistfile1.js"></script>
 
           <h3>Theming</h3>
 
