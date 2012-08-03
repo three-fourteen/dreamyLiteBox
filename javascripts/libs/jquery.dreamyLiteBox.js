@@ -74,7 +74,7 @@
         var modal = [
                     '<a id="close-lbox" class="icon-cross">Close</a>',
                     '<div class="lbox-content">',
-                    '<input type="text" id="input-prompt-lbox">',
+                    '<input type="text" id="input-prompt-lbox" />',
                     '<div id="confirm-lbox">',
                     '<button type="button" id="btn-accept" class="btn">Accept</button>',
                     '<button type="button" id="btn-cancel" class="btn">Cancel</button>',
