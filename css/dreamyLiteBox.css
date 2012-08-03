@@ -46,7 +46,7 @@
   -o-border-radius: 3px;
   border-radius: 3px;
   display: none;
-  font-size: 1.2em;
+  font-size: 12px;
   left: 50%;
   position: fixed;
   top: 50%;
@@ -122,8 +122,9 @@
 }
 /*confirm-lbox*/
 #confirm-lbox {
-  bottom: 0;
-  height: 30px;
+  bottom: 5px;
+  height: 23px;
+  left: 0;
   overflow: hidden;
   position: absolute;
   text-align: center;
@@ -144,8 +145,10 @@
 
   *display: inline;
   *zoom: 1;
+  font-size: 12px;
   font-weight: bold;
   margin: 0 5px;
+  line-height: 15px;
   padding: 2px;
 }
 .lbox_alert {
@@ -158,7 +161,7 @@
 }
 /*title*/
 .lbox-title {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   margin: 0 0 13px;
   padding: 0 15px;

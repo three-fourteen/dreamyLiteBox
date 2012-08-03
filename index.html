@@ -95,7 +95,7 @@ $('.msg-prompt').dreamyLiteBox({
     callbackOnConfirm:writeSomething
 });
 
-// Wait
+// WAIT
 $('.msg-wait').dreamyLiteBox({
     type:'wait',
     title:false,
@@ -110,6 +110,11 @@ $('.msg-wait').dreamyLiteBox({
 
 // Modal
 $('.msg-modal').dreamyLiteBox({
+    type:'modal',
+    msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
+});
+// Modal using HTML from the page
+$('.msg-modal-html').dreamyLiteBox({
     type:'modal',
     msg:'This is a simple <strong>modal window</strong> with some <em>HTML</em>.'
 });
@@ -129,11 +134,12 @@ $('.msg-custom').dreamyLiteBox({
     }
  });
 
+// Set a time out for the wait lite box
 $('.msg-wait').click(function(){
     setTimeout(endWait,5000);
 })
 
-// Used as example with the wait message
+// Used as example with the wait lite box to close it
 function endWait(){
     $('.msg-wait').dreamyLiteBox('close');
 }
