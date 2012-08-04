@@ -164,6 +164,16 @@ a.button span {
 #view-on-github {
   margin-right: 0;
 }
+
+code {
+  background-color: #f2f2f2;
+  border: solid 1px #ddd;
+  padding: 0 3px;
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal;
+  color: #222;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
 /*
 code, pre {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal;
