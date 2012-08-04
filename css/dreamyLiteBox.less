@@ -12,6 +12,7 @@
 @white:      #fff;
 @black:      #000;
 @gray:       #ccc;
+@fontSize:   12px;   
 //End Vars
 
 //Mixins 
@@ -108,7 +109,7 @@
     cursor: pointer;
     float: right;
     .hide-text();
-    height: 17px;
+    height:17px;
     margin: 6px 6px 0 0;
     position: relative; 
     width: 17px;
@@ -118,8 +119,8 @@
     background: @white;
     .box-shadow(1px 1px 2px lighten(@black, 10%));
     .border-radius(3px);
-    display: none;
-    font-size: 1.2em;
+    display:none;
+    font-size: @fontSize;
     left: 50%;
     position: fixed;
     top: 50%;
@@ -128,7 +129,7 @@
     h2{
         border:1px solid lighten(@main_color, 5%);
         color: @white;
-        font-size:14px;
+        font-size:@fontSize+2;
         #gradient > .vertical(@main_color, lighten(@main_color, 10%));
         margin: 0 0 10px; 
         padding: 5px 10px 4px;
@@ -174,8 +175,9 @@
 
 /*confirm-lbox*/
 #confirm-lbox{
-    bottom: 0;
-    height: 30px;
+    bottom: 5px;
+    height: 23px;
+    left:0; 
     overflow: hidden;
     position: absolute;
     text-align: center;
@@ -188,8 +190,10 @@
         cursor:pointer;
         display: inline-block;
         .inline-block();
+        font-size: @fontSize;
         font-weight: bold;
         margin: 0 5px;
+        line-height: @fontSize + 3; 
         padding: 2px;
     }
 }
@@ -207,7 +211,7 @@
 
 /*title*/
 .lbox-title{
-    font-size:16px;
+    font-size:@fontSize+2;
     line-height:1.5;
     margin: 0 0 13px;
     padding:0 15px
