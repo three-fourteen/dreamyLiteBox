@@ -112,12 +112,16 @@
     height:17px;
     margin: 6px 6px 0 0;
     position: relative; 
+    position:absolute\9; /*ie*/
+    top:0\9;/*ie*/
+    right:0\9;/*ie*/
     width: 17px;
     z-index: 10001;
 }
 .lbox {
     background: @white;
     .box-shadow(1px 1px 2px lighten(@black, 10%));
+    border:1px solid #000 \9;
     .border-radius(3px);
     display:none;
     font-size: @fontSize;
@@ -163,10 +167,10 @@
 
 #fade {
     background: @black;
-    display: none;
+    display: block;
     height: 100%;
     left: 0;
-    .opacity(75);
+    .opacity(0);
     position: fixed;
     top: 0;
     width: 100%;
@@ -177,6 +181,7 @@
 #confirm-lbox{
     bottom: 5px;
     height: 23px;
+    height: 25px\9;/*ie*/
     left:0; 
     overflow: hidden;
     position: absolute;
@@ -207,6 +212,12 @@
     display: block;
     margin:0 auto;
     width: 75%;
+}
+/*IE7*/
+#input-prompt-lbox-parent{
+    margin:0 auto;
+    width: 75%;
+    #input-prompt-lbox{width:100%}
 }
 
 /*title*/

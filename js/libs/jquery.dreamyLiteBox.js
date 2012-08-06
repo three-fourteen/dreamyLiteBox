@@ -74,7 +74,7 @@
         var modal = [
                     '<a id="close-lbox" class="icon-cross">Close</a>',
                     '<div class="lbox-content">',
-                    '<input type="text" id="input-prompt-lbox" />',
+                    '<input type="text" id="input-prompt-lbox">',
                     '<div id="confirm-lbox">',
                     '<button type="button" id="btn-accept" class="btn">Accept</button>',
                     '<button type="button" id="btn-cancel" class="btn">Cancel</button>',
@@ -92,7 +92,7 @@
         modal[5] = (data.opts.useDefaultBtns)?modal[5]:''; 
 
 
-        //Fade in the Popup and add close button
+        //Create the lite box and show it
         switch(data.opts.type){
             case 'alert':
                 // Set the modal content
@@ -122,6 +122,9 @@
             case 'prompt':
                 // Set the modal content
                 lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
+                if($.browser.msie && $.browser.version < 8){
+                    $('#input-prompt-lbox').wrap('<div id="input-prompt-lbox-parent" />')
+                }
                 // Set the size
                 $('#confirm-lbox .btn').click(function(){
                     if($(this).text()=='Accept'){
@@ -151,7 +154,7 @@
 
         if(typeof data.opts.buttons === 'object' && data.opts.buttons !== null){
             $.each(data.opts.buttons, function(name, props) {
-                props = { click: props, text: name };
+                props = {click: props, text: name};
                 $('<button type="button" class="btn" id="'+props.text.replace(/\s/g, '')+'">'+props.text+'</button>')
                     .click(function() {
                         props.click.apply($this, arguments);
@@ -174,7 +177,7 @@
         $('body').append('<div id="fade" />'); 
         $this.bg = $('#fade');
         //Fade in the fade layer
-        $this.bg.css('background',(data.opts.bg)?data.opts.bgColor:'transparent').fadeIn(); 
+        $this.bg.css('background',data.opts.bgColor).animate({opacity:(data.opts.bg)?.75:.001}); 
         if(data.opts.type != 'wait'){
             bindEvents($this);  
         }
@@ -253,7 +256,7 @@
         })},
 
         //type,message,bg,callback,width,height
-        open: function(msg){  return this.each(function() {       
+        open: function(msg){return this.each(function() {       
             var $this = $(this),
                 data  = $this.data(DREAMY_LITE_BOX),
                 lbox = data.lbox;
@@ -261,7 +264,7 @@
             if($.isFunction(data.opts.callbackBeforeOpen))data.opts.callbackBeforeOpen();
             openlBox($this, data, lbox);
         })},
-        close: function(){  return this.each(function() {
+        close: function(){return this.each(function() {
             var $this = $(this);
             var data  = $this.data(DREAMY_LITE_BOX);
             var lbox = data.lbox;
