@@ -3,6 +3,11 @@ dreamyLiteBox
 
 A super simple jQuery lite box
 
+Demo
+=============
+
+Here you can take a look to the [demo](http://andres314.github.com/dreamyLiteBox/).
+
 
 Overview
 =============
@@ -22,12 +27,12 @@ Overview
   - useDefaultSizeType: true, // Boolean to use the default size for each type  
   - width: 530, // Number for a custom with. Optional, if is undefined use a default value.
   - height: 150, //Number for a custom height. Optional, if is undefined use a default value.
-  - callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
-  - callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
-  - callbackOnOpen: null, // Callback for appear function
-  - callbackOnClose: null, // Callback for disappear function
-  - callbackBeforeOpen: null, // Callback before open the lite box
-  - callbackBeforeClose: null // Callback before close the lite box
+  - callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message. Returns the trigger element, except "promt" type which returns the param and the element.
+  - callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message. Returns the trigger element.
+  - callbackOnOpen: null, // Callback for appear function. Returns the trigger element.
+  - callbackOnClose: null, // Callback for disappear function. Returns the trigger element.
+  - callbackBeforeOpen: null, // Callback before open the lite box. Returns the trigger element.
+  - callbackBeforeClose: null // Callback before close the lite box. Returns the trigger element.
 
 
 * **Theming**

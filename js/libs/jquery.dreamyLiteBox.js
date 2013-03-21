@@ -1,6 +1,6 @@
 /**  
  * jQuery DreamyLiteBox Plugin
- * Version: 0.5
+ * Version: 1.0
  * URL: https://github.com/andres314/dreamyLiteBox
  * Descripton: A super simple jQuery lite box
  * Requires: jQuery
@@ -112,9 +112,9 @@
                 // Set the size
                 $('#confirm-lbox .btn').click(function(){
                     if($(this).text()=='Accept'){
-                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm();
+                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm($this);
                     }else{
-                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel();
+                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel($this);
                     }
                     closelBox(lbox, data);
                 })
@@ -128,9 +128,9 @@
                 // Set the size
                 $('#confirm-lbox .btn').click(function(){
                     if($(this).text()=='Accept'){
-                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm($('#input-prompt-lbox').val());
+                        if($.isFunction(data.opts.callbackOnConfirm))data.opts.callbackOnConfirm($('#input-prompt-lbox').val(), $this);
                     }else{
-                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel();
+                        if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel($this);
                     }
                     closelBox(lbox, data);
                 })
@@ -183,7 +183,7 @@
         }
 
         // Callback on open
-        if($.isFunction(data.opts.callbackOnOpen))data.opts.callbackOnOpen();
+        if($.isFunction(data.opts.callbackOnOpen))data.opts.callbackOnOpen($this);
     }
 
     /**
@@ -205,7 +205,7 @@
             });
         }
         // Close callback
-        if($.isFunction(data.opts.callbackOnClose))data.opts.callbackOnClose();
+        if($.isFunction(data.opts.callbackOnClose))data.opts.callbackOnClose($this);
         unbindEvents();
     }
 
@@ -261,14 +261,14 @@
                 data  = $this.data(DREAMY_LITE_BOX),
                 lbox = data.lbox;
             data.opts.msg = (msg)?msg:data.opts.msg;
-            if($.isFunction(data.opts.callbackBeforeOpen))data.opts.callbackBeforeOpen();
+            if($.isFunction(data.opts.callbackBeforeOpen))data.opts.callbackBeforeOpen($this);
             openlBox($this, data, lbox);
         })},
         close: function(){return this.each(function() {
             var $this = $(this);
             var data  = $this.data(DREAMY_LITE_BOX);
             var lbox = data.lbox;
-            if($.isFunction(data.opts.callbackBeforeClose))data.opts.callbackBeforeClose();
+            if($.isFunction(data.opts.callbackBeforeClose))data.opts.callbackBeforeClose($this);
             closelBox(lbox, data);
         })}
 
@@ -312,11 +312,11 @@
         useDefaultSizeType: true, // Boolean to use the default size for each type  
         width: 530, // Number for a custom with. Optional, if is undefined use a default value.
         height: 150, //Number for a custom height. Optional, if is undefined use a default value.
-        callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message.
-        callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.
-        callbackOnOpen: null, // Callback for appear function
-        callbackOnClose: null, // Callback for disappear function
-        callbackBeforeOpen: null, // Callback before open the lite box
-        callbackBeforeClose: null // Callback before close the lite box
+        callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message. Returns the trigger element, except "promt" type which returns the param and the element.
+        callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message. Returns the trigger element.
+        callbackOnOpen: null, // Callback for appear function. Returns the trigger element.
+        callbackOnClose: null, // Callback for disappear function. Returns the trigger element.
+        callbackBeforeOpen: null, // Callback before open the lite box. Returns the trigger element.
+        callbackBeforeClose: null // Callback before close the lite box. Returns the trigger element.
     };
 })(jQuery);
