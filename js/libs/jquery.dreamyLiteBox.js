@@ -123,7 +123,7 @@
                 // Set the modal content
                 lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
                 if($.browser.msie && $.browser.version < 8){
-                    $('#input-prompt-lbox').wrap('<div id="input-prompt-lbox-parent" />')
+                    $('#input-prompt-lbox').wrap('<div id="input-prompt-lbox-parent" />');
                 }
                 // Set the size
                 $('#confirm-lbox .btn').click(function(){
@@ -133,7 +133,7 @@
                         if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel($this);
                     }
                     closelBox(lbox, data);
-                })
+                });
                 // Set the size
                 if(data.opts.useDefaultSizeType){
                     data.opts.width = 530;
@@ -177,7 +177,7 @@
         $('body').append('<div id="fade" />'); 
         $this.bg = $('#fade');
         //Fade in the fade layer
-        $this.bg.css('background',data.opts.bgColor).animate({opacity:(data.opts.bg)?.75:.001}); 
+        $this.bg.css('background',data.opts.bgColor).css('display','block').animate({opacity:(data.opts.bg)?.75:.001}); 
         if(data.opts.type != 'wait'){
             bindEvents($this);  
         }
