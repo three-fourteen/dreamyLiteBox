@@ -202,7 +202,7 @@
 
     // Used as example with the prompt and confirm message.
     function writeSomething(prompt){
-        if(prompt){
+        if(typeof prompt != 'string'){
             document.getElementById('writeHere').innerHTML += prompt + '<br>';
         }else{
             document.getElementById('writeHere').innerHTML += 'I wrote this after you confirm.<br>';
