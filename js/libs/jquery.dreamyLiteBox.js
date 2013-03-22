@@ -53,14 +53,14 @@
         //Close Popups and Fade Layer
         var elements = (data.opts.type=='alert')?'#close-lbox':'#close-lbox, #fade';
         //When clicking on the close or fade layer...
-        $(elements).live('click', function() { 
+        $(elements).on('click', function() {
             closelBox(lbox, data);
         }); 
     }
     
     var unbindEvents = function(){
         $(document).unbind('keydown.' + DREAMY_LITE_BOX);
-        $('#close-lbox, #fade').die();
+        $('#close-lbox, #fade').off();
     }
 
     /**
