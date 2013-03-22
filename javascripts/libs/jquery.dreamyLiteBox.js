@@ -1,6 +1,6 @@
 /**  
  * jQuery DreamyLiteBox Plugin
- * Version: 0.5
+ * Version: 1.0
  * URL: https://github.com/andres314/dreamyLiteBox
  * Descripton: A super simple jQuery lite box
  * Requires: jQuery
@@ -53,14 +53,14 @@
         //Close Popups and Fade Layer
         var elements = (data.opts.type=='alert')?'#close-lbox':'#close-lbox, #fade';
         //When clicking on the close or fade layer...
-        $(elements).live('click', function() { 
+        $(elements).on('click', function() {
             closelBox(lbox, data);
         }); 
     }
     
     var unbindEvents = function(){
         $(document).unbind('keydown.' + DREAMY_LITE_BOX);
-        $('#close-lbox, #fade').die();
+        $('#close-lbox, #fade').off();
     }
 
     /**
@@ -123,7 +123,7 @@
                 // Set the modal content
                 lbox.html(modal[0] + modal[7] + modal[1] + msg + modal[6] + modal[2] + modal[3] + modal[4] + modal[5] + modal[6]);
                 if($.browser.msie && $.browser.version < 8){
-                    $('#input-prompt-lbox').wrap('<div id="input-prompt-lbox-parent" />')
+                    $('#input-prompt-lbox').wrap('<div id="input-prompt-lbox-parent" />');
                 }
                 // Set the size
                 $('#confirm-lbox .btn').click(function(){
@@ -133,7 +133,7 @@
                         if($.isFunction(data.opts.callbackOnCancel))data.opts.callbackOnCancel($this);
                     }
                     closelBox(lbox, data);
-                })
+                });
                 // Set the size
                 if(data.opts.useDefaultSizeType){
                     data.opts.width = 530;
@@ -177,7 +177,7 @@
         $('body').append('<div id="fade" />'); 
         $this.bg = $('#fade');
         //Fade in the fade layer
-        $this.bg.css('background',data.opts.bgColor).animate({opacity:(data.opts.bg)?.75:.001}); 
+        $this.bg.css('background',data.opts.bgColor).css('display','block').animate({opacity:(data.opts.bg)?.75:.001}); 
         if(data.opts.type != 'wait'){
             bindEvents($this);  
         }
@@ -313,7 +313,7 @@
         width: 530, // Number for a custom with. Optional, if is undefined use a default value.
         height: 150, //Number for a custom height. Optional, if is undefined use a default value.
         callbackOnConfirm: null, // Callback used only for the confirm and prompt messages, with the function to call after confirm the message. Returns the trigger element, except "promt" type which returns the param and the element.
-        callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message.Returns the trigger element.
+        callbackOnCancel: null, // Callback used only for the confirm and prompt messages, with the function to call after cancel the message. Returns the trigger element.
         callbackOnOpen: null, // Callback for appear function. Returns the trigger element.
         callbackOnClose: null, // Callback for disappear function. Returns the trigger element.
         callbackBeforeOpen: null, // Callback before open the lite box. Returns the trigger element.
